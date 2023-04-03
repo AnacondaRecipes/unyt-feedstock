@@ -36,12 +36,19 @@ test:
     - pip check
 
 about:
-  home: http://github.com/yt-project/unyt
+  home: https://github.com/yt-project/unyt
   license: BSD-3-Clause
   license_family: BSD
   license_file: LICENSE
   summary: Handle, manipulate, and convert data with units in Python
-  doc_url: http://unyt.readthedocs.io/
+  description: |
+    A package for handling numpy arrays with units.
+    Often writing code that deals with data that has units can be confusing. 
+    A function might return an array but at least with plain NumPy arrays, 
+    there is no way to easily tell what the units of the data are without somehow knowing them prior.
+    The unyt package (pronounced like "unit") provides a subclass of NumPy's 
+    ndarray class that knows about units.
+  doc_url: https://unyt.readthedocs.io/
   dev_url: https://github.com/yt-project/unyt
 
 extra:
