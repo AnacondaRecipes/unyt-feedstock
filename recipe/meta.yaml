@@ -13,20 +13,27 @@ source:
 build:
   noarch: python
   number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps -vv
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  skip: true  # [py<38]
 
 requirements:
   host:
-    - python >=3.8.0
+    - python
     - pip
+    - setuptools
+    - wheel
   run:
-    - python >=3.8.0
+    - python
     - numpy >=1.17.5
     - sympy >=1.5
 
 test:
+  requires:
+    - pip
   imports:
     - unyt
+  commands:
+    - pip check
 
 about:
   home: http://github.com/yt-project/unyt
