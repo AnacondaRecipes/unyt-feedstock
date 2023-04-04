@@ -28,13 +28,17 @@ requirements:
     - sympy >=1.5
 
 test:
+  source_files:
+    - unyt/tests
   requires:
     - pip
+    - pytest
   imports:
     - unyt
   commands:
     - pip check
-
+    - pytest unyt/tests -v
+    
 about:
   home: https://github.com/yt-project/unyt
   license: BSD-3-Clause
