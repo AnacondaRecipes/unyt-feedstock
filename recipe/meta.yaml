@@ -25,7 +25,10 @@ requirements:
     # test_wrapping_completeness fails with numpy>=2.1 since the cumulative_prod (introduced in numpy 2.1)
     # array function was added after 3.0.3, this will likely be fixed in 3.0.4.
     # Restricting upper-bound for now, see https://github.com/yt-project/unyt/pull/512
-    - numpy >=1.19.3,<2.1
+    - numpy >=1.19.3,<2.1 # [py<313]
+    # Making an exception for python 3.13 since numpy>=2.1 is the only option
+    # This means that this package *may* misbehave for python 3.13 until v3.0.4 is released
+    - numpy >=1.19.3,<3.0 # [py>=313]
     - sympy >=1.7
     - packaging >=20.9
 
