@@ -8,6 +8,8 @@ package:
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: d1d6f481186c663b2631fe129e82abdf0aed61a93a70662040020aabe016384b
+  patches:
+    - patches/0001-fix-incompatibilities-with-numpy-2-1.patch
 
 build:
   number: 0
@@ -15,6 +17,9 @@ build:
   skip: true  # [py<39]
 
 requirements:
+  build:
+    - patch      # [not win]
+    - m2-patch   # [win]
   host:
     - python
     - pip
@@ -22,20 +27,10 @@ requirements:
     - wheel
   run:
     - python
-    # test_wrapping_completeness fails with numpy>=2.1 since the cumulative_prod (introduced in numpy 2.1)
-    # array function was added after 3.0.3, this will likely be fixed in 3.0.4.
-    # Restricting upper-bound for now, see https://github.com/yt-project/unyt/pull/512
-    - numpy >=1.19.3,<2.1 # [py<313]
-    # Making an exception for python 3.13 since numpy>=2.1 is the only option
-    # This means that this package *may* misbehave for python 3.13 until v3.0.4 is released
-    - numpy >=1.19.3,<3.0 # [py>=313]
+    - numpy >=1.19.3,<3.0
     - sympy >=1.7
     - packaging >=20.9
 
-# Skip failing tests for python 3.13 because of the use of numpy>=2.1
-{% set tests_to_skip = "" %}                                                # [py>=313]
-{% set tests_to_skip = tests_to_skip + "test_wrapping_completeness or " %}  # [py>=313]
-{% set tests_to_skip = tests_to_skip + "test_known_arguments" %}            # [py>=313]
 test:
   source_files:
     - unyt/tests
@@ -46,8 +41,7 @@ test:
     - unyt
   commands:
     - pip check
-    - pytest unyt/tests -v                                # [py<313]
-    - pytest unyt/tests -v -k "not ({{ tests_to_skip }})" # [py>=313]
+    - pytest unyt/tests -v
 
 about:
   home: https://github.com/yt-project/unyt
