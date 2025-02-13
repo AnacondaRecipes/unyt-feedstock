@@ -1,6 +1,5 @@
 {% set name = "unyt" %}
-{% set version = "2.9.5" %}
-{% set sha256 = "99892f33b5c6bf97053beac84c8a136747631828f030725e9a01147d48377337" %}
+{% set version = "3.0.3" %}
 
 package:
   name: {{ name|lower }}
@@ -8,12 +7,12 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  sha256: d1d6f481186c663b2631fe129e82abdf0aed61a93a70662040020aabe016384b
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
-  skip: true  # [py<38]
+  skip: true  # [py<39]
 
 requirements:
   host:
@@ -23,8 +22,12 @@ requirements:
     - wheel
   run:
     - python
-    - numpy >=1.17.5
-    - sympy >=1.5
+    # test_wrapping_completeness fails with numpy>=2.1 since the cumulative_prod (introduced in numpy 2.1)
+    # array function was added after 3.0.3, this will likely be fixed in 3.0.4.
+    # Restricting upper-bound for now, see https://github.com/yt-project/unyt/pull/512
+    - numpy >=1.19.3,<2.1
+    - sympy >=1.7
+    - packaging >=20.9
 
 test:
   source_files:
