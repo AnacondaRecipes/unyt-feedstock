@@ -33,9 +33,9 @@ requirements:
     - packaging >=20.9
 
 # Skip failing tests for python 3.13 because of the use of numpy>=2.1
-{% set tests_to_skip = "" %}
-{% set tests_to_skip = tests_to_skip + "test_wrapping_completeness or " %} # [py>=313]
-{% set tests_to_skip = tests_to_skip + "test_known_arguments" %} # [py>=313]
+{% set tests_to_skip = "" %}                                                # [py>=313]
+{% set tests_to_skip = tests_to_skip + "test_wrapping_completeness or " %}  # [py>=313]
+{% set tests_to_skip = tests_to_skip + "test_known_arguments" %}            # [py>=313]
 test:
   source_files:
     - unyt/tests
@@ -46,7 +46,8 @@ test:
     - unyt
   commands:
     - pip check
-    - pytest unyt/tests -v -k "not ({{ tests_to_skip }})"
+    - pytest unyt/tests -v                                # [py<313]
+    - pytest unyt/tests -v -k "not ({{ tests_to_skip }})" # [py>=313]
 
 about:
   home: https://github.com/yt-project/unyt
