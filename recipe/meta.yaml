@@ -24,6 +24,7 @@ requirements:
     - python
     - pip
     - setuptools
+    - setuptools_scm
     - wheel
   run:
     - python
@@ -41,6 +42,8 @@ test:
     - unyt
   commands:
     - pip check
+    # check that pip gets the correct version
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
     - pytest unyt/tests -v
 
 about:
