@@ -1,31 +1,31 @@
 {% set name = "unyt" %}
-{% set version = "3.0.3" %}
+{% set version = "3.0.4" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: d1d6f481186c663b2631fe129e82abdf0aed61a93a70662040020aabe016384b
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 17ea7013ef4004507fe193193e80b30645ec269b5b3f5fca80eda8f7cb961213
   patches:
     - patches/0001-fix-incompatibilities-with-numpy-2-1.patch
 
 build:
-  number: 1
+  number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   skip: true  # [py<39]
 
 requirements:
   build:
-    - patch      # [not win]
-    - m2-patch   # [win]
+    - patch  # [not win]
+    - m2-patch  # [win]
   host:
     - python
     - pip
-    - setuptools
+    - setuptools >=61.2
     - setuptools_scm >=7.0.1
-    - wheel
+    - setuptools-scm >=7.0.1
   run:
     - python
     - numpy >=1.19.3,<3.0
@@ -54,10 +54,10 @@ about:
   summary: Handle, manipulate, and convert data with units in Python
   description: |
     A package for handling numpy arrays with units.
-    Often writing code that deals with data that has units can be confusing. 
-    A function might return an array but at least with plain NumPy arrays, 
+    Often writing code that deals with data that has units can be confusing.
+    A function might return an array but at least with plain NumPy arrays,
     there is no way to easily tell what the units of the data are without somehow knowing them prior.
-    The unyt package (pronounced like "unit") provides a subclass of NumPy's 
+    The unyt package (pronounced like "unit") provides a subclass of NumPy's
     ndarray class that knows about units.
   doc_url: https://unyt.readthedocs.io/
   dev_url: https://github.com/yt-project/unyt
