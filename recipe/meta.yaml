@@ -8,8 +8,6 @@ package:
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 17ea7013ef4004507fe193193e80b30645ec269b5b3f5fca80eda8f7cb961213
-  patches:
-    - patches/0001-fix-incompatibilities-with-numpy-2-1.patch
 
 build:
   number: 0
@@ -17,15 +15,11 @@ build:
   skip: true  # [py<39]
 
 requirements:
-  build:
-    - patch  # [not win]
-    - m2-patch  # [win]
   host:
     - python
     - pip
     - setuptools >=61.2
     - setuptools_scm >=7.0.1
-    - setuptools-scm >=7.0.1
   run:
     - python
     - numpy >=1.19.3,<3.0
@@ -42,7 +36,6 @@ test:
     - unyt
   commands:
     - pip check
-    # check that pip gets the correct version
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
     - pytest unyt/tests -v
 
@@ -59,7 +52,7 @@ about:
     there is no way to easily tell what the units of the data are without somehow knowing them prior.
     The unyt package (pronounced like "unit") provides a subclass of NumPy's
     ndarray class that knows about units.
-  doc_url: https://unyt.readthedocs.io/
+  doc_url: https://unyt.readthedocs.io
   dev_url: https://github.com/yt-project/unyt
 
 extra:
