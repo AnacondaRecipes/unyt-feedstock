@@ -27,8 +27,6 @@ requirements:
     - packaging >=20.9
 
 test:
-  source_files:
-    - unyt/tests
   requires:
     - pip
     - pytest
@@ -37,7 +35,7 @@ test:
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
-    - pytest unyt/tests -v
+    - pytest --pyargs unyt.tests
 
 about:
   home: https://github.com/yt-project/unyt
