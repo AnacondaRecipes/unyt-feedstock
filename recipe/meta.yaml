@@ -1,5 +1,5 @@
 {% set name = "unyt" %}
-{% set version = "3.0.4" %}
+{% set version = "3.1.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,23 +7,23 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 17ea7013ef4004507fe193193e80b30645ec269b5b3f5fca80eda8f7cb961213
+  sha256: 771582a87f1e521c9b62f7ca269b1965c0f77b479f7a063a51e8cef8b4cae51d
 
 build:
-  number: 1
+  number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
-  skip: true  # [py<39]
+  skip: true  # [py<310]
 
 requirements:
   host:
     - python
     - pip
-    - setuptools >=61.2
     - setuptools_scm >=7.0.1
+    - flit-core >=3.11,<4
   run:
     - python
-    - numpy >=1.19.3,<3.0
-    - sympy >=1.7
+    - numpy >=1.21.3,<3.0
+    - sympy >=1.9.0
     - packaging >=20.9
 
 test:
